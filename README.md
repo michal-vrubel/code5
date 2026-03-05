@@ -4,4 +4,6 @@ Run using the following command:
 
 2. mvnw install
 
-3. java -jar ./target/code5-final.jar --rules=./default/rules.txt --pages=./default/pages.txt
+3. Run:
+
+java -jar ./target/code5-final.jar --rules=./default/rules.txt --pages=./default/pages.txt

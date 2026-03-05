@@ -86,7 +86,8 @@ public class App {
 			long sumOfMiddle = 0L;
 
 			String line;
-			orders: while ((line = reader.readLine()) != null) {
+ 
+			while ((line = reader.readLine()) != null) {
 				if (line.matches(ORDER_REGEX)) {
 
 					Matcher matcher = NUMBER_PATTERN.matcher(line);
@@ -104,9 +105,6 @@ public class App {
 
 						if (previous != null) {
 							isCorrect = isCorrect && topoGraph.isCorrectOrder(previous, current);
-							if (!isCorrect) {
-								continue orders;
-							}
 						}
 
 						buffer.put(2 * count - 1, current);
@@ -114,16 +112,21 @@ public class App {
 
 						previous = current;
 					}
+					
+					String middleValueMessage;
+					
+					if (isCorrect) {
+						int middleValue = buffer.get(count);
+						middleValueMessage = String.valueOf(middleValue);
+						sumOfMiddle += buffer.get(count);
+					} else {
+						middleValueMessage = "won't be included";
+					}
 
-					int middleValue = buffer.get(count);
-					sumOfMiddle += middleValue;
-
-					System.out.printf("%s: %s, middle: %s%n", line, isCorrect ? "correct" : "incorrect", middleValue);
+					System.out.printf("%s: %s, middle: %s%n", line, isCorrect ? "correct" : "incorrect", middleValueMessage);
 				}
-
-				System.out.printf("Total: %s", sumOfMiddle);
 			}
-
+			System.out.printf("Total: %s", sumOfMiddle);
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to process orders", e);
 		}
